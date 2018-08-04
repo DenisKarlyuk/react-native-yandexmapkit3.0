@@ -1,19 +1,7 @@
 
-# react-native-yandex-map-kit
+# react-native-yandex-map-kit3.0
 
-Origin repo https://github.com/doomsower/react-native-yandexmapkit
-
-Since original projects are in deep coma, here I only support features that I needed for my other projects. If you need markers, callouts or polygons, I suggest you use [react-native-maps](https://github.com/lelandrichardson/react-native-maps).
-However, if you must use yandex map kit in your react-native projects and you need any of these features, I encourage you to contribute. Just be sure to check out both of the original SDKs before you implement anything, because they are quite different!
-
-Note that Android version might not work properly on emulators, which results in map tiles not being rendered. 
-
-![Android](https://raw.githubusercontent.com/doomsower/react-native-yandexmapkit/master/images/rn-ymk-android.gif)
-![iOS](https://raw.githubusercontent.com/doomsower/react-native-yandexmapkit/master/images/rn-ymk-ios.gif)
-
-## Installation
-
-`$ npm install react-native-yandexmapkit --save`
+Started from project https://github.com/doomsower/react-native-yandexmapkit
 
 ### Android
 
