@@ -1,7 +1,7 @@
 
 # react-native-yandex-map-kit
 
-This is a wrapper around Yandex Map Kit for [iOS](https://github.com/yandexmobile/yandexmapkit-ios) and [Android](https://github.com/yandexmobile/yandexmapkit-android).
+Origin repo https://github.com/doomsower/react-native-yandexmapkit
 
 Since original projects are in deep coma, here I only support features that I needed for my other projects. If you need markers, callouts or polygons, I suggest you use [react-native-maps](https://github.com/lelandrichardson/react-native-maps).
 However, if you must use yandex map kit in your react-native projects and you need any of these features, I encourage you to contribute. Just be sure to check out both of the original SDKs before you implement anything, because they are quite different!
@@ -126,10 +126,3 @@ The component exposes some Android-only props that control map UI:
 | `setApiKey` | String | Sets Yandex Map Kit API key for all map views you use. Call this before you mount your first map view. 
 | `requestGeocoding` | geocode: string, **Required**<br/>options: object,<br/>apikey: string | Helper method to call [Yandex Geocoder](https://tech.yandex.ru/maps/doc/geocoder/desc/concepts/input_params-docpage/), takes three arguments:<br/> **geocode** - queried address string or coordinate,<br/>**options** -well, options<br/>**apikey** - Yandex Maps API key for geocoding requests, this is different from Yandex Map Kit key<br/>Returns Promise which resolves with json 
 | `makeDebouncedGeocoding` | options: object <br/> onComplete: function<br/> apiKey: string <br/> debounceWait: number | Convenience method to make Yandex Geocoder requests.<br/>**options** - geocoder request options<br/>**onComplete** - will be called with geocoder two arguments - first match in Android format, and full response<br/>**apiKey** - same as for *requestGeocoding*<br/>**debounceWait** - debouncing interval, defaults to 150 ms<br/><br/>Depending on **options** returns function that takes one argument - address, or two arguments - latitude and longitude (for reverse geocoding).
-
-
-## Example
-
-You can find it [here](https://github.com/doomsower/react-native-yandexmapkit/tree/master/example)
-
-You'll need to create `.env.development` property file in `example` dir and put your `YANDEXMAPKIT_API_KEY` in it.
