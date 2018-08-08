@@ -14,7 +14,7 @@ function requestGeocoding(geocode, options, apikey) {
     .then(response => response.json());
 }
 
-function makeDebouncedGeocoding(options, onComplete, apiKey, debounceWait = 150) {
+function makeDebouncedGeocoding(options, onComplete, apiKey, debounceWait = 1000) {
   const apiCall = (geocode) => {
     requestGeocoding(geocode, options, apiKey)
       .then(json => {

@@ -18,7 +18,6 @@ public class RNYandexMapKitPackage implements ReactPackage {
         return Arrays.<NativeModule>asList(new RNYandexMapKitModule(reactContext));
     }
 
-    @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }

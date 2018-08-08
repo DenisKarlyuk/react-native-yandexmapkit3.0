@@ -1,14 +1,14 @@
 {
-  "name": "react-native-yandexmapkit",
+  "name": "react-native-yandexmapkit3.0",
   "version": "0.1.4",
-  "description": "React Native wrapper for Yandex Map Kit iOS and Android",
+  "description": "React Native wrapper for Yandex Map Kit 3.0 iOS and Android",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/doomsower/react-native-yandexmapkit.git"
+    "url": "git+https://github.com/dmitryermichev/react-native-yandexmapkit3.0"
   },
   "keywords": [
     "react",
@@ -20,17 +20,17 @@
     "yandex",
     "mapkit"
   ],
-  "author": "Konstantin Kuznetsov",
+  "author": "Dmitry Ermichev",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/doomsower/react-native-yandexmapkit/issues"
+    "url": "https://github.com/dmitryermichev/react-native-yandexmapkit3.0/issues"
   },
-  "homepage": "https://github.com/doomsower/react-native-yandexmapkit#readme",
+  "homepage": "https://github.com/dmitryermichev/react-native-yandexmapkit3.0#readme",
   "peerDependencies": {
-    "react-native": ">=0.32.0"
+    "react-native": ">=0.56.0"
   },
   "dependencies": {
-    "lodash": "^4.15.0",
-    "query-string": "^4.2.3"
+    "lodash": "^4.17.10",
+    "query-string": "^6.1.0"
   }
 }
