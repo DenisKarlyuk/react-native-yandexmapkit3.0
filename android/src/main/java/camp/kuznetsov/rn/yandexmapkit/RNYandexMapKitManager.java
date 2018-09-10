@@ -44,7 +44,6 @@ public class RNYandexMapKitManager extends SimpleViewManager<RNYandexMapKitView>
 
     @ReactProp(name="location")
     public void setLocation(RNYandexMapKitView mapView, ReadableMap location){
-        Log.d("location", "updating location = " + location.toString());
         double latitude = location.getDouble("latitude");
         double longitude = location.getDouble("longitude");
         CameraPosition current = mapView.getMap().getCameraPosition();
@@ -73,7 +72,6 @@ public class RNYandexMapKitManager extends SimpleViewManager<RNYandexMapKitView>
         switch (commandId) {
             case ANIMATE_TO_COORDINATE:
                 Point coordinate = null;
-                Log.d("command", "inside manager");
                 ReadableMap latlon = args.getMap(0);
                 if (latlon != null){
                     double latitude = latlon.getDouble("latitude");

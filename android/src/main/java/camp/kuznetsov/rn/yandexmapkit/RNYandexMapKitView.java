@@ -23,6 +23,9 @@ import com.yandex.mapkit.layers.ObjectEvent;
 import com.yandex.mapkit.location.Location;
 import com.yandex.mapkit.location.LocationListener;
 import com.yandex.mapkit.location.LocationStatus;
+import com.yandex.mapkit.logo.Alignment;
+import com.yandex.mapkit.logo.HorizontalAlignment;
+import com.yandex.mapkit.logo.VerticalAlignment;
 import com.yandex.mapkit.map.CameraListener;
 import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.map.CameraUpdateSource;
@@ -41,11 +44,15 @@ public class RNYandexMapKitView extends MapView implements CameraListener {
 
     public static final String MAP_EVENT = "onMapEvent";
 
+    public static final int USER_EVENT = 1;
+    public static final int APPLICATION_EVENT = 2;
+
     public RNYandexMapKitView(Context context) {
         super(context);
         this.onStart();
         this.getMap().addCameraListener(this);
-        this.getMap().move(new CameraPosition(new Point(0, 0), 14, 0, 0));
+        this.getMap().move(new CameraPosition(new Point(0, 0), 16, 0, 0));
+        this.getMap().getLogo().setAlignment(new Alignment(HorizontalAlignment.RIGHT, VerticalAlignment.TOP));
     }
 
     public RNYandexMapKitView(Context context, AttributeSet attributeSet) {
@@ -55,20 +62,30 @@ public class RNYandexMapKitView extends MapView implements CameraListener {
     @Override
     public void onCameraPositionChanged(Map map, CameraPosition cameraPosition, CameraUpdateSource cameraUpdateSource, boolean finished) {
         if(finished) {
-            Log.d("location", "location changed to " + cameraPosition.getTarget().toString());
             Point mapCenter = cameraPosition.getTarget();
-            WritableMap payload = Arguments.createMap();
-            double mapLatitude = BigDecimal.valueOf(mapCenter.getLatitude())
-                    .setScale(6, RoundingMode.HALF_UP)
-                    .doubleValue();
-            double mapLongitude = BigDecimal.valueOf(mapCenter.getLongitude())
-                    .setScale(6, RoundingMode.HALF_UP)
-                    .doubleValue();
-            payload.putDouble("latitude",  mapLatitude);
-            payload.putDouble("longitude", mapLongitude);
-            ReactContext reactContext = (ReactContext) getContext();
-            reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(this.getId(), MAP_EVENT, payload);
+            int type = 0;
+            if (cameraUpdateSource == CameraUpdateSource.GESTURES) {
+                type = USER_EVENT;
+            } else {
+                type = APPLICATION_EVENT;
+            }
+            notifyPositionChanged(type, mapCenter);
         }
+    }
+
+    private void notifyPositionChanged(int type, Point position) {
+        WritableMap payload = Arguments.createMap();
+        double mapLatitude = BigDecimal.valueOf(position.getLatitude())
+                .setScale(6, RoundingMode.HALF_UP)
+                .doubleValue();
+        double mapLongitude = BigDecimal.valueOf(position.getLongitude())
+                .setScale(6, RoundingMode.HALF_UP)
+                .doubleValue();
+        payload.putInt("type", type);
+        payload.putDouble("latitude",  mapLatitude);
+        payload.putDouble("longitude", mapLongitude);
+        ReactContext reactContext = (ReactContext) getContext();
+        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(this.getId(), MAP_EVENT, payload);
     }
 
     public void animateToCoordinate(@Nullable Point coordinate){
@@ -78,7 +95,7 @@ public class RNYandexMapKitView extends MapView implements CameraListener {
                 public void onLocationUpdated(Location location) {
                     CameraPosition cameraPosition = getMap().getCameraPosition();
                     Point currentPoint = cameraPosition.getTarget();
-                    Point myLocation = location.getPosition();
+                    final Point myLocation = location.getPosition();
                     if (myLocation != null
                             && myLocation.getLatitude() != currentPoint.getLatitude()
                             && myLocation.getLongitude() != currentPoint.getLongitude()){
@@ -88,7 +105,12 @@ public class RNYandexMapKitView extends MapView implements CameraListener {
                                         cameraPosition.getAzimuth(),
                                         cameraPosition.getTilt()),
                                 new Animation(Animation.Type.SMOOTH, 0),
-                                null
+                                new Map.CameraCallback() {
+                                    @Override
+                                    public void onMoveFinished(boolean b) {
+                                        notifyPositionChanged(USER_EVENT, myLocation);
+                                    }
+                                }
                         );
                     }
                 }
@@ -111,6 +133,7 @@ public class RNYandexMapKitView extends MapView implements CameraListener {
                         new Animation(Animation.Type.SMOOTH, 0),
                         null
                 );
+                notifyPositionChanged(USER_EVENT, coordinate);
             }
 
         }

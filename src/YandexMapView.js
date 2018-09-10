@@ -10,6 +10,9 @@ import {
   Image} from 'react-native';
 import {makeDebouncedGeocoding} from './YandexMapKit';
 
+export const USER_EVENT = 1;
+export const APPLICATION_EVENT = 2;
+
 class YandexMapView extends Component {
 
   _prevLocation = null;
@@ -67,9 +70,9 @@ class YandexMapView extends Component {
   }
 
   onMapEventInternal = (event) => {
-    const {latitude, longitude} = event.nativeEvent;
-    this._prevLocation = {latitude, longitude};
-    if (this.props.onInteraction){
+    const {latitude, longitude, type} = event.nativeEvent;
+    this._prevLocation = {type, latitude, longitude};
+    if (this.props.onInteraction && type === USER_EVENT){
       this.props.onInteraction(event.nativeEvent);
     }
     

@@ -32,7 +32,7 @@ function makeDebouncedGeocoding(options, onComplete, apiKey, debounceWait = 1000
             const subtitle = firstFound.GeoObject.description;
             const kind = firstFound.GeoObject.metaDataProperty.GeocoderMetaData.kind;
             androidCompatibleResult = {
-              displayName: subtitle + ', ' + title,
+              displayName: title,
               kind,
               title,
               subtitle,
